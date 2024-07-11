@@ -1,0 +1,58 @@
+using UnityEngine;
+
+public class ItemMovement : MonoBehaviour
+{
+    public Transform targetPosition; 
+    public float moveSpeed = 5f; 
+    public bool moveOnStart = true;
+    public bool smoothTeleport = false;
+    public float teleportDuration = 1f;
+
+    private Vector3 startingPosition;
+    private float teleportTimer = 0f;
+
+    void Start()
+    {
+        startingPosition = transform.position;
+
+        if (moveOnStart)
+        {
+            MoveToTarget();
+        }
+    }
+
+    void Update()
+    {
+        if (!moveOnStart)
+        {
+            MoveToTarget();
+        }
+
+        if (smoothTeleport && teleportTimer < teleportDuration)
+        {
+            teleportTimer += Time.deltaTime;
+            float t = teleportTimer / teleportDuration;
+            transform.position = Vector3.Lerp(startingPosition, targetPosition.position, t);
+        }
+    }
+
+    private void MoveToTarget()
+    {
+        Vector3 direction = targetPosition.position - transform.position;
+        direction.Normalize();
+
+        transform.position += direction * moveSpeed * Time.deltaTime;
+
+        if (Vector3.Distance(transform.position, targetPosition.position) < 0.1f)
+        {
+            transform.position = targetPosition.position;
+        }
+    }
+
+    public void SmoothTeleport()
+    {
+        startingPosition = transform.position;
+        teleportTimer = 0f;
+        smoothTeleport = true;
+    }
+}
