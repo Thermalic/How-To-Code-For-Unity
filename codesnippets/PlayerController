@@ -1,0 +1,56 @@
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    // Movement speed
+    public float speed = 5f; 
+
+    // Jump force
+    public float jumpForce = 10f; 
+
+    // Check if the player is grounded
+    public bool isGrounded;
+    public Transform groundCheck; // Transform for checking if grounded
+    public float groundCheckRadius = 0.2f; // Radius for ground check
+    public LayerMask groundMask; // Layer mask for detecting ground
+
+    // Rigidbody component
+    private Rigidbody rb;
+
+    void Start()
+    {
+        // Get the Rigidbody component
+        rb = GetComponent<Rigidbody>(); 
+    }
+
+    void Update()
+    {
+        // Get input from the player using WASD
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        // Calculate movement vector
+        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
+
+        // Move the player
+        rb.velocity = movement * speed;
+
+        // Check if the player is grounded
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
+
+        // Jump
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space)) 
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    // This script allows a player to move using WASD and jump.
+    // To use this script:
+    // 1. Attach this script to a GameObject that has a Rigidbody component.
+    // 2. Create an empty GameObject for "groundCheck" and position it below the player.
+    // 3. Set the "groundCheckRadius" to a small value (e.g., 0.2).
+    // 4. Create a new Layer called "Ground" and assign your ground objects to it.
+    // 5. Select the "Ground" layer in the "groundMask" field of the script.
+    // 6. Adjust the "speed" and "jumpForce" variables to your liking.
+}
