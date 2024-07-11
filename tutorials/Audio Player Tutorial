@@ -1,0 +1,54 @@
+ How to make a audio play on start
+
+Step 1: Setting up the Scene
+- Open Unity and create a new 3D project.
+- Ensure you have at least one GameObject in the scene. For example, you can use a cube or any other primitive shape.
+
+Step 2: Creating the Script
+- Right-click in the Project panel, then go to Create > C# Script.
+- Name the script "PlayAudioOnStart" and double-click it to open in your code editor.
+
+Step 3: Writing the Script
+- Inside the PlayAudioOnStart script, create the following variables under the { :
+
+```csharp
+using UnityEngine;
+
+public class PlayAudioOnStart : MonoBehaviour
+{
+    public AudioClip audioClip; // The audio clip to play
+    private AudioSource audioSource; // The audio source component
+    public bool loop=false;
+}
+```
+
+Step 4: Implementing The Audio Component
+Inside the PlayAudioOnStart script, add the following code to the script:
+
+```csharp
+void Start()
+{
+    audioSource = GetComponent<AudioSource>();
+
+    if (audioSource == null)
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    audioSource.clip = audioClip;
+    audioSource.playOnAwake = false;
+    audioSource.loop = loop;
+    audioSource.Play();
+}
+```
+
+Step 5: Saving the Script
+- Save the script by pressing the save button usually on the top or a file icon button.
+
+Step 6: Assigning the Audio Clip
+- Add an audio clip to the AudioClip variable in the Inspector panel by dragging an audio file (e.g., .wav or .mp3) onto the script component you attached to a GameObject in the scene.
+
+Step 7: Testing the Audio
+- Press the Play button in Unity and observe how the audio plays when the game starts.
+
+That's it! You've created a simple script that plays audio when the game starts in Unity.
