@@ -2,6 +2,8 @@
 
 Welcome to this repository filled with resources for learning to code in Unity using C#! 
 
+Each lesson takes 5 Minutes or less!
+
 ## Why Unity and C#?
 
 * **Unity** is a powerful game engine used by many studios to create incredible games across various platforms.
