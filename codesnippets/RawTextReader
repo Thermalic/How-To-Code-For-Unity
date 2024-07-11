@@ -1,0 +1,48 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro; 
+using System.Net; 
+
+public class RawTextReader : MonoBehaviour
+{
+    public string url; 
+    public TextMeshProUGUI textMeshPro; 
+    public Text textComponent; 
+
+    void Start()
+    {
+        if (textMeshPro == null && textComponent == null)
+        {
+            Debug.LogError("Please assign either a TextMeshProUGUI or Text component.");
+            return;
+        }
+
+        StartCoroutine(FetchText());
+    }
+
+    IEnumerator FetchText()
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Error fetching text from URL: " + request.error);
+            }
+            else
+            {
+                string text = request.downloadHandler.text;
+
+                if (textMeshPro != null)
+                {
+                    textMeshPro.text = text;
+                }
+                else
+                {
+                    textComponent.text = text;
+                }
+            }
+        }
+    }
+}
