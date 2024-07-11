@@ -1,0 +1,58 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+public class NPC : MonoBehaviour
+{
+    public float wanderRadius = 10f;
+    public float wanderTimer = 5f;
+    public Transform target;
+
+    private Transform destination;
+    private NavMeshAgent navMeshAgent;
+    private float timer;
+
+    void Start()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        timer = wanderTimer;
+        SetNewRandomDestination();
+    }
+
+    void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (timer >= wanderTimer)
+        {
+            SetNewRandomDestination();
+            timer = 0;
+        }
+
+        if (target != null && Vector3.Distance(transform.position, target.position) < 5f)
+        {
+            navMeshAgent.isStopped = true;
+            transform.LookAt(target);
+        }
+        else
+        {
+            navMeshAgent.isStopped = false;
+        }
+    }
+
+    private void SetNewRandomDestination()
+    {
+        Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+        navMeshAgent.SetDestination(newPos);
+    }
+
+    private Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector3 randDirection = Random.insideUnitSphere * dist;
+        randDirection += origin;
+
+        NavMeshHit navHit;
+        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+
+        return navHit.position;
+    }
+}
