@@ -1,0 +1,41 @@
+using UnityEngine;
+
+public class MoveToPosition : MonoBehaviour
+{
+    public Transform targetPosition; 
+    public bool moveOnStart = true; 
+    public float moveSpeed = 5f; 
+
+    private Vector3 startingPosition;
+
+    void Start()
+    {
+        startingPosition = transform.position;
+
+        if (moveOnStart)
+        {
+            MoveToTarget();
+        }
+    }
+
+    void Update()
+    {
+        if (!moveOnStart) 
+        {
+            MoveToTarget();
+        }
+    }
+
+    private void MoveToTarget()
+    {
+        Vector3 direction = targetPosition.position - transform.position;
+        direction.Normalize();
+
+        transform.position += direction * moveSpeed * Time.deltaTime;
+
+        if (Vector3.Distance(transform.position, targetPosition.position) < 0.1f)
+        {
+            transform.position = targetPosition.position;
+        }
+    }
+}
