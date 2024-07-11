@@ -1,0 +1,86 @@
+using UnityEngine;
+
+public class Door : MonoBehaviour
+{
+    public bool locked = true;
+    public bool opened = false;
+    public AudioClip unlockSound;
+    public AudioClip openSound;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    public void Unlock()
+    {
+        if (locked)
+        {
+            locked = false;
+            audioSource.PlayOneShot(unlockSound);
+        }
+    }
+
+    public void Open()
+    {
+        if (!locked && !opened)
+        {
+            opened = true;
+            audioSource.PlayOneShot(openSound);
+            // Code to smoothly open the door
+        }
+    }
+
+    public void Close()
+    {
+        if (opened)
+        {
+            opened = false;
+            // Code to smoothly close the door
+        }
+    }
+}
+```
+```csharp
+using UnityEngine;
+
+public class SmartDoor : MonoBehaviour
+{
+    public bool locked = true;
+    public bool opened = false;
+    public AudioClip unlockSound;
+    public AudioClip openSound;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    public void Unlock()
+    {
+        if (locked)
+        {
+            locked = false;
+            audioSource.PlayOneShot(unlockSound);
+        }
+    }
+
+    public void Open()
+    {
+        if (!locked && !opened)
+        {
+            opened = true;
+            audioSource.PlayOneShot(openSound);
+        }
+    }
+
+    public void Close()
+    {
+        if (opened)
+        {
+            opened = false;
+        }
+    }
+}
