@@ -1,0 +1,115 @@
+Movement Script with NavMesh
+
+In this tutorial, we will create a basic script in Unity that allows an object to move using NavMesh navigation. This is perfect for beginners who want to learn how to code movement behaviors using NavMesh in Unity.
+
+Step 1: Setting up the Scene
+- Open Unity and create a new 3D project.
+- Make sure you have already baked a NavMesh in your scene. (To bake a NavMesh, go to Window > AI > Navigation, then set up and bake your NavMesh).
+
+Step 2: Creating the Script
+- Right-click in the Project panel, then go to Create > C# Script.
+- Name the script "NavMeshMovement" and double-click it to open in your code editor.
+
+Step 3: Writing the Script
+- Inside the NavMeshMovement script, create the following variables under the { :
+
+using UnityEngine;
+using UnityEngine.AI;
+
+public class NavMeshMovement : MonoBehaviour
+{
+    public Transform target; // The object to move towards
+    NavMeshAgent agent;
+---------------------------------------------------------
+
+Step 4: Creating The Movement Part.
+
+You might notice this under your variable
+
+void Start().
+
+Hover your mouse over the "Start" Text.
+
+Then Delete the Start Text.
+
+Once deleted replace the start with :
+
+void Update() 
+Instead.
+
+This will constantly do something each frame.
+___________________________________
+
+Step 5: Adding the Part Itself.
+
+Now your script should look something like this.
+
+using UnityEngine;
+using UnityEngine.AI;
+
+public class NavMeshMovement : MonoBehaviour
+{
+    public Transform target; // The object to move towards
+    NavMeshAgent agent;
+
+    void Update()
+    {
+    
+    }
+}
+
+Under the { under void Update() Type in " If() {} and click enter.
+ if ()
+    {
+            
+    }
+This is what it should look like so far..
+
+Inside of the () Type In agent != null.
+
+This will check if the agent Variable is invalid, and if so, it will not do anything, so errors won't get caused.
+
+After you do that it should look like this.
+
+if (agent != null)
+{
+
+}
+
+-------------------------------------------------
+
+Step 6: Setting the Destination
+- In the middle of the " { & } type in " agent.SetDestination(target.position);"
+
+This should complete the script, making it look like this! 
+
+using UnityEngine;
+using UnityEngine.AI;
+
+public class NavMeshMovement : MonoBehaviour
+{
+    public Transform target; // The object to move towards
+    NavMeshAgent agent;
+
+    void Update()
+    {
+        if (agent != null)
+        {
+            agent.SetDestination(target.position);
+        }
+    }
+}
+
+-----------------------------------------------------------
+Step 7: Saving 
+- Save the script by pressing the save button, usually on the top or a file icon button.
+
+--------------------------------
+
+Step 8: Assigning the Target
+- In the Inspector panel, assign the "Target" variable of the NavMeshMovement script to the GameObject you want to move towards.
+
+Step 9: Testing the Movement
+- Attach the NavMeshMovement script to an object in your scene and press the Play button in Unity. Observe how the object moves towards the target using NavMesh.
+
+That's it! You've created a simple script that allows an object to move towards another object using NavMesh in Unity.
